@@ -1,4 +1,6 @@
 const bcrypt = require("bcryptjs");
+const userRegisterModel = require("../models/userRegisterModel");
+
 const userRegister = async (req, res) => {
   let {
     userFullName,
@@ -55,6 +57,13 @@ const userRegister = async (req, res) => {
     errors.userConfirmPassword === "" &&
     errors.userPhone === ""
   ) {
+    let userData = new userRegisterModel({
+      userFullName: userFullName,
+      userEmail: userEmail,
+      userPassword: userPassword,
+      userPhone: userPhone,
+    });
+    userData.save();
     res.send({
       success: {
         FullName: userFullName,
